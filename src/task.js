@@ -6,7 +6,7 @@ border: 1px solid lightgrey;
 padding:8px;
 border-raduis:2px;
 margin-bottom:8px;
-background-color:white;
+background-color:${props=>(props.isDragging ? 'lightgreen':'white')}
 `
  const Task = ({
     task,
@@ -16,12 +16,13 @@ background-color:white;
     return (
        <Draggable
        draggableId={task.id} index={index}>
-       {provided=>(
+       {(provided,snapshot)=>(
 
             <Container
             ref={provided.innerRef}
             {...provided.draggableProps}
             {...provided.dragHandleProps}
+            isDragging={snapshot.isDragging} // to change the dragged task backgroun color on the drag w/ snapshot
             >
             {task.content}
             </Container>

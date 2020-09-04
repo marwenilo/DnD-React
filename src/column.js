@@ -11,7 +11,9 @@ const Title = styled.h3`
 padding:8px
 `
 const TaskList = styled.div`
-padding:8px
+padding:8px;
+transition:background-color 0.5s ease;
+background-color:${props=>(props.isDraggingOver ? 'skyblue':'white')}
 `
 const Columns=(
     {column,
@@ -25,11 +27,12 @@ const Columns=(
                 </Title>
                 <Droppable 
                        droppableId={column.id}       >
-                         {provided=> (
+                         {(provided,snapshot)=> (
                      <TaskList
                         ref={provided.innerRef}
                     {...provided.draggableProps}
                          {...provided.dragHandleProps}
+                         isDraggingOver={snapshot.isDraggingOver} // to change the dragged task backgroun color on the drag w/ snapshot
                      >
                  {tasks.map((task,index)=><Task key={task.id} task={task} index={index} />)}
                  {  provided.placeholder  }
