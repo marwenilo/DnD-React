@@ -5,7 +5,12 @@ import {Droppable} from 'react-beautiful-dnd'
 const Container = styled.div`
 margin:8px;
 border: 1px solid lightgrey;
-border-raduis:2px
+border-raduis:2px;
+width:220px;
+
+display:flex;
+flex-direction:column;
+
 ` 
 const Title = styled.h3`
 padding:8px
@@ -13,11 +18,14 @@ padding:8px
 const TaskList = styled.div`
 padding:8px;
 transition:background-color 0.5s ease;
-background-color:${props=>(props.isDraggingOver ? 'skyblue':'white')}
+background-color:${props=>(props.isDraggingOver ? 'skyblue':'white')};
+flex-grow:1;
+min-height:100px
 `
 const Columns=(
     {column,
-    tasks}
+    tasks,
+    isDropDisabled}
 )=> {
     return (
         
@@ -26,7 +34,10 @@ const Columns=(
                         {column.title}
                 </Title>
                 <Droppable 
-                       droppableId={column.id}       >
+                       droppableId={column.id}  
+                       isDropDisabled={isDropDisabled}  
+                    //    type={column.id === "column-3" ? 'done' : 'active'} // cannot move to the type of done 'last column'
+                        >
                          {(provided,snapshot)=> (
                      <TaskList
                         ref={provided.innerRef}
